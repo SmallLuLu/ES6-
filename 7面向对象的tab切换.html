@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        div,
+        ul,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        dl,
+        dt,
+        dd,
+        ol,
+        form,
+        input,
+        textarea,
+        th,
+        td,
+        select {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: normal;
+        }
+
+        ul,
+        ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        input,
+        textarea {
+            outline: none;
+        }
+
+        .tabsbox {
+            width: 400px;
+            height: 300px;
+            border: 1px solid red;
+            margin: auto;
+        }
+        .firstnav{height: 30px;border-bottom: 1px solid black;width: 100%;}
+        .firstnav ul,.firstnav li{
+            float: left;
+        }
+        .liactive{border-bottom: 1px solid white;}
+        .firstnav li{width: 70px;height: 30px;text-align: center;line-height: 30px;border-right:1px solid black ;position: relative;}
+        .firstnav li span:nth-of-type(2){position: absolute;top: 0;right: 0;height: 10px;line-height: 10px;background-color: yellow;}
+        .firstnav div{float: right;}
+        .tabadd{height: 30px;line-height: 30px;width: 30px;}
+        .tabadd span{border: 1px solid black;float: left;width: 20px;height: 20px; text-align: center;line-height: 20px;margin-top: 4px;}
+        .content{height: 270px;}
+        .content section{height: 100%;display: none;}
+        .sectionActive{display: block !important;}
+
+    </style>
+</head>
+
+<body>
+    <div class="tabsbox" id="tab">
+        <nav class="firstnav">
+            <ul>
+                <li class="liactive"><span>测试一</span><span class="remove">x</span></li>
+                <li><span>测试二</span><span class="remove">x</span></li>
+                <li><span>测试三</span><span class="remove">x</span></li>
+            </ul>
+            <div class="tabadd">
+                <span>+</span>
+            </div>
+        </nav>
+        <div class="content">
+            <section class="sectionActive">内容一</section>
+            <section>内容二</section>
+            <section>内容三</section>
+        </div>
+    </div>
+    <script src="js/class.js"></script>
+    <script>
+        var that;
+        class Tab{
+            constructor(id){
+                that=this;
+                this.main = document.querySelector(id);
+                this.add=this.main.querySelector('.tabadd');
+                this.ul=this.main.querySelector('.firstnav ul');
+                this.sectionsFather=this.main.querySelector('.content');
+                this.init();
+            }
+            updataNode(){
+                this.lis =this.main.querySelectorAll('li');
+                this.sections =this.main.querySelectorAll('section');
+                this.remove = this.main.querySelectorAll('.remove');
+                this.spans=this.main.querySelectorAll(".firstnav ul span:first-child");
+            }
+            init(){
+                this.updataNode();
+                // init初始化操作让相关的元素添加绑定事件
+                this.add.onclick=this.addTab;
+                for(var i=0;i<this.lis.length;i++){
+                    this.lis[i].index=i;
+                    this.lis[i].onclick=this.toggleTab;
+                    this.remove[i].onclick=this.deleteTab;
+                    this.spans[i].ondblclick=this.changTab;
+                    this.sections[i].ondblclick=this.changTab;
+                }
+            }
+            // 切换
+            toggleTab(){
+                that.clearClass();
+                this.className="liactive";
+                that.sections[this.index].className='sectionActive';
+            }
+            // 增加
+            addTab(){
+                that.clearClass();
+                var section='<section class="sectionActive">内容一</section>'
+                var li='<li class="liactive"><span>新选项卡</span><span class="remove">x</span></li>';
+                that.ul.insertAdjacentHTML('beforeend',li);
+                that.sectionsFather.insertAdjacentHTML('beforeend',section);
+                that.init();
+            }
+            // 删除
+            deleteTab(e){
+                e.stopPropagation();//组织冒泡事件的产生
+                var index=this.parentNode.index;
+                that.lis[index].remove();
+                that.sections[index].remove();
+                that.init();
+                if(document.querySelector('.liactive')) return;
+                index--;
+                that.lis[index]&&that.lis[index].click(); 
+            }
+            // 修改
+            changTab(){
+                window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+                var str=this.innerHTML;
+                this.innerHTML=`<input type="text" style="width:80%;height:80%;" value=${str} />`
+                var input =this.children[0];
+                input.select();
+                input.onblur=function(){
+                    this.parentNode.innerHTML=this.value;
+                }
+                input.onkeyup=function(e){
+                    if(e.keyCode===13){
+                        this.blur()
+                    }
+                }
+            }
+            clearClass(){
+                for(var i=0;i<this.lis.length;i++){
+                    this.lis[i].className='';
+                    this.sections[i].className='';
+                }
+            }
+        }
+        new Tab('#tab');
+    </script>
+</body>
+
+</html>

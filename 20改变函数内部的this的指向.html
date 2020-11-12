@@ -1,0 +1,107 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-06 14:43:39
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-06 15:20:14
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>按钮</button>
+    <script>
+        // js为我们体重了一些函数方法来帮我们更优雅的处理函数内部的this的指向问题，常用的有  bind() call() apply()三种方法
+
+        // 1.call()方法
+            // 一.call可以调用函数  二可以改变函数的this的指向
+        {
+            let o={
+                name:'andy'
+            }
+            function fn(){
+                console.log(this);
+            }   
+            fn();//this的指向为window
+            fn.call(); //this的指向为window
+            fn.call(o);//this的指向为o对象
+            // call的主要作用可以实现继承
+            function Father(name , age){
+                this.name=name;
+                this.age =age;
+            }
+            function Son(name,age){
+                Father.call(this,name,age)
+            }
+            let son =new Son('张三',15)
+            console.log(son);
+        
+        }
+
+        // 2.apply()方法
+        {
+            /*
+            *apply() 方法调用一个函数 。简单的理解为调用函数的方法，但是它可以改变函数的this指向
+            *   fun.apply(target,[argsArray])
+            *   target:在fun函数运行时指定的this值
+            *   argsArray:传递的值,必须包含在数组里面
+            *   返回值就是函数的返回值，因为它就是调用函数
+            */
+            let o = {
+                name:'didi'
+            }
+            function applyfn(arr){
+                console.log(this);
+                console.log(arr);
+            }
+            applyfn.apply(o);
+            applyfn.apply(o,['pink'])
+            // 1.也是调用函数 第二个可以改变函数内部的this的指向
+            // 2.但是 它的参数必须是数组(伪数组)
+            // 3.apply 的主要应用，我们可以利用apply借助数学内置对象求最大值
+
+            let arr=[1,5,6,15,1212];
+            console.log(Math.max.apply(Math,arr));
+            console.log(Math.min.apply(Math,arr));
+
+        }
+        // 3.bind()方法
+        /**
+        *   bind()方法不会调用函数，但是能够改变函数内部的this指向
+        *   fun.bind(target,a,b,c,d,...)
+        *   target ： 在fun函数运行是指定的this值
+        *   a,b,c,d：传递 的其他参数
+        *   返回值有指定的this值和初始化参数改造的原函数拷贝
+        */
+        {
+            let o = {
+                name:'gege'
+            }
+            function bindfn(a,b,c){
+                console.log(this);
+                console.log(a+c+b);
+            }
+            let fn = bindfn.bind(o,1,2,3)
+            fn();
+            // 1.不会调用原来的函数 可以改变原来函数内部的this指向
+            // 2. 返回的是原函数改变this之后产生的新函数
+            // 3.如果有的函数我们不需要立即调用，但是又想改变这个函数内部的this指向此时用bind
+            // 4.我们有一个按钮，当我们点击了之后，就禁用这个按钮，3秒之后开启这个按钮
+            let btn=document.querySelector('button');
+            btn.onclick = function (){
+                this.disabled =true;//这个this指向的是btn
+                setTimeout( function(){
+                        this.disabled=false
+                    }.bind(this),3000)//这个函数的this指向btn
+            }
+        }
+        
+                
+    </script>
+</body>
+</html>

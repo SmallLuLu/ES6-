@@ -1,0 +1,42 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-07-30 17:10:47
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-07 16:05:07
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let s = Symbol("foo");
+        console.log(typeof (s))
+        console.log(s)
+        console.log(s.toString())
+        s === s.toString ? console.log(true) : console.log(false)
+        console.log(s.description)
+        console.log('------------');
+        const obj = {};
+        let a = Symbol('a');
+        let b = Symbol('b');
+
+        obj[a] = 'Hello';
+        obj[b] = 'World';
+
+        const objectSymbols = Object.getOwnPropertySymbols(obj);
+
+        console.log(objectSymbols)
+        // [Symbol(a), Symbol(b)]
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-04 15:13:54
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-04 15:45:32
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Father{
+            constructor(x,y){
+                this.x=x;
+                this.y=y;
+            }
+            sum(){
+                console.log(this.x+this.y)
+            }
+        }
+        // 子类继承父类的加法方法同时扩展减法方法
+        class Son extends Father{
+            constructor(x,y){
+                // 利用super调用父类的构造函数
+                // 子类构造函数中使用super必须放到this前面(必须先调用父类的构造方法，再使用子类构造方法)
+                super(x,y);
+
+                this.x=x;
+                this.y=y;
+                
+            }
+            subtract(){
+                console.log(this.x-this.y)
+            }
+        }
+
+        let son = new Son(5,3);
+        son.subtract();
+        son.sum()
+       
+
+
+
+
+    </script>
+</body>
+</html>

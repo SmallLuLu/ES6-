@@ -1,0 +1,73 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-07-27 15:37:29
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-07-27 16:01:48
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>0</p>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <script>
+        var arr = document.getElementsByTagName("p");
+        // for (var i = 0; i < arr.length; i++) {
+        //     arr[i].onclick = function () {
+        //         alert(i);//5次均输出5
+        //     }
+        // }
+        // for (var i = 0; i < arr.length; i++) {
+        //     (function (arg) {
+        //         arr[i].onclick = function () {
+        //             alert(arg);
+        //         }
+        //     })(i)
+        // }
+        for (var i = 0; i < arr.length; i++) {
+            arr[i].index = i;
+            arr[i].onclick = function () {
+                alert(this.index);
+            }
+        }
+        // for (var i = 0; i < arr.length; i++) {
+        //     arr[i].onclick = (function (arg) {
+        //         return function () {
+        //             alert(arg);
+        //         }
+        //     })(i);
+        // }
+        // {
+        //     let a = 1;
+        //     var b = 2;
+        // }
+        // console.log(b);
+        // console.log(a)
+        // var a = [];
+        // for (var i = 0; i < 10; i++) {
+        //     a[i] = function () {
+        //         console.log(i);
+        //     };
+        // }
+        // a[6](); // 10
+        // for (let i = 0; i < 10; i++) {
+        //     a[i] = function () {
+        //         console.log(i);
+        //     };
+        // }
+        // a[6](); // 10
+    </script>
+</body>
+
+</html>

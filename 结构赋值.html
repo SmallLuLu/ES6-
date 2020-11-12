@@ -1,0 +1,52 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-07-28 10:18:33
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-07-28 10:28:05
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        // let a = 1;
+        // let b = 2;
+        // let c;
+        // c = a;
+        // a = b;
+        // b = c;
+        // console.log(a, b);
+        // [a, b] = [b, a];
+        // console.log(a, b);
+
+
+        // 返回一个数组
+
+        function example1() {
+            return [1, 2, 3];
+        }
+        let [a, b, c] = example1();
+
+        // 返回一个对象
+
+        function example2() {
+            return {
+                foo: 1,
+                bar: 2
+            };
+        }
+        let { foo, bar } = example2();
+        console.log(a,b,c,foo,bar);
+    </script>
+</body>
+
+</html>

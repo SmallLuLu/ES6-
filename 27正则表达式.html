@@ -1,0 +1,61 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-06 17:56:28
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-06 18:27:33
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 正则表达式(Regular Expression)：是用于匹配字符串中字符组合的模式。在Javascript中，正则表达式也会死对象
+        // 1.创建正则表达式
+            // 1.通过RegExp对象来创建 正则表达式
+            var regexp =new RegExp(/123/);
+            console.log(regexp);
+            // 2.利用字面量创建正则表达式
+            var rg=/123/;
+        // 2.测试正则表达式 test
+            // regexp.test(str)
+            // regexp:是写的正则表达式
+            // str:是我们要测试的文本
+        // 3.正则表达式的特殊字符
+            // 1.边界符
+            // ^ 以谁开始
+            // $ 以谁结束
+            var reg1=/abc/;//正则表达式里面不需要加引号，不管是数字型还是字符串类型
+            // /abc/ 只要包含有abc这是哪个字符串返回的都是true
+            console.log(reg1.test('abc'));
+            console.log(reg1.test('abcd'));
+            console.log(reg1.test('abccd'));
+            console.log(reg1.test('abced'));
+            console.log('---------------------');
+            var reg2=/^abc/;
+            console.log(reg2.test('abc'));
+            console.log(reg2.test('abcd'));
+            console.log(reg2.test('accd'));
+            console.log('---------------------');
+            var reg3=/^abc$/;
+            console.log(reg3.test('abc'));
+            console.log(reg3.test('abcd'));
+            console.log(reg3.test('abcabc'));
+            // 2.字符类：
+                // 1.[]表示有一系列字符可供选择，只要匹配其中一个就可以
+            var reg3=/[abc]/;//只要包含a 或者b 或者c 都返回true
+            console.log(reg3.test('a1515'));
+            console.log('---------------------');
+                // 2.-范围符
+            var reg4=/^[a-z]$/
+
+
+
+    </script>
+</body>
+</html>

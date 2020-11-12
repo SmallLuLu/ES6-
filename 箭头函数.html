@@ -1,0 +1,59 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-07-30 09:35:10
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-07 10:26:32
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 箭头函数不绑定this关键字，箭头函数中的this，指向的是函数定义位置的上下文this
+        function foo() {
+            setTimeout(() => {
+                console.log(this.id)
+            }, 1000)
+        }
+        var id = 12;
+        foo();
+        console.log('我在定时器之前出现');
+
+        function Timer() {
+            this.s1 = 0;
+            this.s2 = 0;
+            setTimeout(() => {
+                this.s1++
+            }, 1000);
+            setTimeout(function () {
+                this.s2++;
+            }, 1000);
+        }
+        var timer = new Timer();
+        Timer();
+        setTimeout(() => console.log('s1: ', timer.s1), 3100);
+        setTimeout(() => console.log('s2: ', timer.s2), 3100);
+        // 剩余参数
+        const sum = (...args)=>{
+            let totle=0;
+            args.forEach(item=>{totle+=item})
+            return totle
+        }
+        sum(1,2,3);
+        sum(1,2,3,4,5);
+
+        let arr1=['张三','李四','王五'];
+        let [s1,...s2]=arr1;
+        
+    </script>
+</body>
+
+</html>

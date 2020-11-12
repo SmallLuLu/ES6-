@@ -1,0 +1,161 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-04 09:52:40
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-04 16:41:37
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var something = 'hi';
+        console.log(typeof something[Symbol.iterator]);
+        var iterator = something[Symbol.iterator]();
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+        // 模拟Iterator的next()的执行
+        {
+            let it = makeIterator(['a', 'b', 'c']);
+            function makeIterator(arr) {
+                let nextIndex = 0;
+                return {
+                    next: function () {
+                        return nextIndex < arr.length ? {
+                            value: arr[nextIndex++],
+                            done: false
+                        } : {
+                                value: undefined,
+                                done: true
+                            }
+                    }
+                }
+            };
+            console.log(it.next());
+            console.log(it.next());
+            console.log(it.next());
+            console.log(it.next());
+        }
+        {
+            let map = new Map();
+            map.set('name', 'zhangsan');
+            map.set('name2', 'lisi');
+            let it = map[Symbol.iterator]();
+            console.log(it.next());
+            console.log(it.next());
+        }
+        {
+            let arr = ['aaa', 'bbb', 'ccc'];
+            for (let it of arr) {
+                console.log(it)
+            }
+        }
+        {
+            function fun() {
+                for (let v of arguments) {
+                    console.log(v)
+                }
+            }
+            fun('wangwu', 'maliu', 'sunqi')
+        }
+        {
+            console.log("++++++++++++++++++++++++")
+            class RangeIterator {
+                constructor(start, stop) {
+                    this.value = start;
+                    this.stop = stop;
+                }
+                [Symbol.iterator]() { return this; }
+                next() {
+                    var value = this.value;
+                    if (value < this.stop) {
+                        this.value++;
+                        return { done: false, value: value }
+                    }
+                    return { done: true, value: undefined };
+                }
+            }
+            function range(start, stop) {
+                return new RangeIterator(start, stop);
+            }
+            for (var value of range(0, 3)) {
+                console.log(value)
+            }
+        }
+        {
+            let obj = {
+                data: ['hellow', 'world'],
+                [Symbol.iterator]() {
+                    const self = this;
+                    let index = 0;
+                    return {
+                        next() {
+                            if (index < self.length) {
+                                return {
+                                    value: self.data[index++],
+                                    done: false
+                                }
+                            } else {
+                                return { value: undefined, done: true }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        {
+            // 解构赋值默认调用 Symbol.iterator,扩展运算符默认调用 Iterator接口
+            let set = new Set().add('a').add('b').add('c');
+            let [x, y] = set;
+            console.log(x, y);
+            let [first, ...second] = set;
+            console.log(first, second);
+        }
+        {
+            let string = 'Hello world';
+            let arr = [1, 2, 3, 4];
+            let set = new Set(['a', 'b', 'c', 'd']);
+            let map = new Map();
+            map.set('one', 1);
+            map.set('two', 2);
+            map.set('three', 3);
+            console.log("Set的for...of遍历");
+            for (let i of set) {
+                console.log(i);
+            }
+            console.log("字符串的for...of遍历");
+            for (let i of string) {
+                console.log(i);
+            }
+            console.log("数组的for...of遍历");
+            for (let i of arr) {
+                console.log(i);
+            }
+            console.log("Map的for...of遍历");
+            for (let [name, value] of map) {
+                console.log(name + ':' + value);
+            }
+            console.log("对象的for...in遍历");
+            let es6 = {
+                edition: 6,
+                committee: "TC39",
+                standard: "ECMA-262"
+            };
+
+            for (let e in es6) {
+                console.log(e);
+            }
+        }
+    </script>
+</body>
+
+</html>

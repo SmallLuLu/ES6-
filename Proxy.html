@@ -1,0 +1,147 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-07-31 14:20:05
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-07-31 15:56:56
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let proxy = new Proxy({}, {
+            get: function (target, propkey) {
+                return { target, propkey }
+            }
+        })
+        let obj = Object.create(proxy);
+        console.log(proxy.name);
+        console.log(obj.a)
+
+        var target = {};
+        var handler = {};
+        var proxy1 = new Proxy(target, handler);
+        proxy1.a = "abc";
+        console.log(target.a)
+        console.log(proxy1.a)
+
+        console.log("+++++++++++++++++++++++++++++")
+        let person = { 'name': '张三' };
+        // var getProxy=new Proxy(person,{
+        //     get:function(target,propKey){
+        //         if(propkey in target){
+        //             return target[propkey]
+        //         }else{
+        //             throw new ReferenceError("Prop name \"" + propKey + "\" does not exist.")
+        //         }
+        //     }
+        // })
+        // console.log(getProxy.name);
+        // console.log(getProxy.a)
+        console.log("-----------------------------")
+        let proxy2 = new Proxy({}, {
+            get(target, propKey, receiver) {
+                console.log(`GET ${propKey}`);
+                return target[propKey]
+            }
+        })
+        let getObj = Object.create(proxy2);
+        console.log(getObj.foo)
+        console.log("+++++++++++++++++++++++++++++")
+        function createArray(...elements) {
+            let handler = {
+                get(target, propKey, receiver) {
+                    let index = Number(propKey);
+                    if (index < 0) {
+                        propKey = String(target.length + index)
+                    }
+                    return Reflect.get(target, propKey, receiver);
+                }
+            }
+            let target = [];
+            target.push(...elements);
+            return new Proxy(target, handler);
+        }
+
+        let arr = createArray('a', 'b', 'c');
+        console.log(arr[0])
+        console.log('/******************************************/')
+
+        var pipr = function (value) {
+            let funcStack = [];
+            let oproxy = new Proxy({}, {
+                get: function (pipObject, fnName) {
+                    if (fnName === 'get') {
+                        return funcStack.reduce(function (val, fn) {
+                            return fn(val)
+                        }, value)
+                    }
+                    funcStack.push(window[fnName]);
+                    return oproxy;
+                }
+            });
+            return oproxy;
+        }
+        var double = n => n * 2;
+        var pow = n => n * n;
+        var reverseInt = n => n.toString().split('').reverse().join('') | 0;
+        console.log(pipr(3).double.pow.reverseInt.get)
+        console.log('实现一个生成各种 DOM 节点的通用函数dom')
+
+        const dom = new Proxy({}, {
+            get(target, property) {
+                return function (attrs = {}, ...children) {
+                    const el = document.createElement(property);
+                    for (let prop of Object.keys(attrs)) {
+                        el.setAttribute(prop, attrs[prop]);
+                    }
+                    for (let child of children) {
+                        if (typeof child === 'string') {
+                            child = document.createTextNode(child);
+                        }
+                        el.appendChild(child);
+                    }
+                    return el;
+                }
+            }
+        });
+
+        const el = dom.div({},
+            'Hello, my name is ',
+            dom.a({ href: '//example.com' }, 'Mark'),
+            '. I like:',
+            dom.ul({},
+                dom.li({}, 'The web'),
+                dom.li({}, 'Food'),
+                dom.li({}, '…actually that\'s it')
+            )
+        );
+
+        document.body.appendChild(el);
+        console.log('set开始+++++++++++++')
+        let setproxy=new Proxy({},{
+            set(target,propKey,value){
+                if(propKey==='age'){
+                    if(!Number.isInteger(value)){
+                        throw new TypeError(`参数错误`)
+                    }
+                    if(value<200){
+                        throw new RangeError("数据类型错误")
+                    }
+                }
+                target[propKey]=value;
+            }
+        })
+        setproxy.age=201
+    </script>
+</body>
+
+</html>

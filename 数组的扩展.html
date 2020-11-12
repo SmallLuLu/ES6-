@@ -1,0 +1,84 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-07-30 14:06:24
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-07-30 16:41:44
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        console.log(...[1, 2, 3])
+        function add() {
+            let addNum = 0;
+            for (let i = 0; i < arguments.length; i++) {
+                addNum += arguments[i]
+            }
+            return addNum
+        }
+        console.log(add(1, 2, 3))
+
+        function fn1(x, y, z, w, t) {
+            return x + y + z + w + t
+        };
+        const args = [1, 1, 1, 1];
+        console.log(fn1(1, ...args));
+
+        let a = 5;
+        const Arr = [...(a > 0 ? ['a'] : [])]
+        console.log(Arr)
+
+        let maxArr = [1, 2, 3, 4, 5];
+        function MaxNUM() {
+            let maxNum = 0;
+            for (let i = 0; i < maxArr.length; i++) {
+                if (maxArr[i] > maxNum) {
+                    maxNum = maxArr[i]
+                }
+            }
+            console.log(maxNum)
+        }
+        console.log("for循环比大小");
+        MaxNUM();
+        console.log("math.max.apply方法");
+        console.log(Math.max.apply(Math,maxArr))
+        console.log("sort排序");
+        console.log( maxArr.sort((a,b)=>b-a)[0]);
+        console.log("ES6的扩展运算符方法");
+        console.log(Math.max(...maxArr))
+
+
+        console.log("数组的合并");
+        let Arr1=[1,2,3];
+        let Arr2=[4,5,6];
+        console.log(Arr1.concat(Arr2));
+
+        console.log("ES6的方法")
+        console.log(...Arr2);
+        Arr1.push(...Arr2);
+        console.log(Arr1)
+
+        console.log("数组的复制")
+        let Arr3=[7,8,9];
+        let Arr4=Arr3;
+        console.log(Arr3)
+        console.log(Arr4)
+
+        
+
+
+
+
+    </script>
+</body>
+
+</html>

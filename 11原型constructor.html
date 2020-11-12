@@ -1,0 +1,68 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-05 16:20:12
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-05 17:14:31
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        {   
+            function Star(name , age){
+                this.name=name;
+                this.age=age;
+            }
+            // 很多情况下，我们需要手动的利用constructor这个属性指回 原来的构造函数
+            Star.prototype.sing=function(){
+                console.log('我会唱歌')
+            }
+            Star.prototype={
+                // 如果我们修改了原来的原型对象，给原型对象赋值的是一个对象，则必须手动的利用constructor指回原来的构造函数
+                constructor:Star,
+                sing:function(){
+                    console.log('我会唱歌');
+                },
+                moive:function(){
+                    console.log('我会演电影');
+                }
+            }
+            let ldh =new Star('刘德华',18); 
+            ldh.sing();
+            console.log(Star.prototype);
+            console.log(ldh.__proto__);
+            console.log(Star.prototype.constructor);
+            console.log(ldh.__proto__.constructor)
+            /*
+            *构造函数，实例，原型对象三者之间的联系
+            *
+            *                  Star.prototype
+            * Star构造---------------------------------->Star原型对象
+            *   函数  <----------------------------------  prototype
+            *             Star,prototype.constructot
+            *     -                                       ->
+            *       -                                  -
+            *        -                               -
+            *         -                            -
+            *          -                         -    ldh.__proto__
+            *           -                       -
+            *            -                     -
+            *             ->                  -
+            *                      ldh对象实例
+            *                ldh.__protp__.constructor
+            * 
+            *                   
+            */
+        }
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-06 16:44:20
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-06 17:29:44
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 递归函数 ：函数内部自己调用自己，这个函数就是递归函数
+        // 递归函数的作用和循环效果一样，由于递归函数很容易发生"栈溢出"错误，所以必须加入退出条件 return
+        var num =1;
+        function fn(){
+            console.log('我要打印六句话');
+            if(num==6){
+                return
+            }
+            num++;
+            fn();
+        }
+        fn();
+        // 利用递归函数求 1-n的阶乘 1*2*3*4*...n
+        function fun(n){
+            if(n==1){
+                return 1
+            }
+            return n * fun(n-1)
+        }
+        console.log(fun(3));
+
+        // 利用递归遍历数据
+        var data=[{
+            id:1,
+            name:'家电',
+            goods:[{
+                id:11,
+                gname:'冰箱'
+            },{
+                id:12,
+                gname:'洗衣机'
+            }]
+        },{
+            id:2,
+            name:'服饰'
+        }]
+        // 我们想要做输入id号 就可以返回的数据对象
+        // 1.利用 forEach 去遍历里面的每一个对象
+        function getID(json,id){
+            var o={};
+            json.forEach(function(item){
+                // console.log(item);
+                if(item.id == id){
+                    // console.log(item);
+                    o=item;
+                }else if(item.goods && item.goods.length>0){
+                    o=getID(item.goods,id);
+                }
+            });
+            return o;
+        }
+        getID(data,1);
+        getID(data,11);
+    </script>
+</body>
+</html>

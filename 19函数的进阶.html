@@ -1,0 +1,68 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: Luyh
+ * @Date: 2020-08-06 14:20:04
+ * @LastEditors: Luyh
+ * @LastEditTime: 2020-08-06 14:43:12
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 函数的定义和调用
+
+        {
+            // 一 函数的定义
+            // 1.函数声明的方式 function关键字(命名函数)
+            function fn() { };
+            // 2.函数表达式(匿名函数)
+            var fun = function () { };
+            // 3.new Function('参数一','参数二'，'函数体') Function里面的参数必须用''
+            var f = new Function('a', 'b', 'console.log(a+b)');
+            f(1, 2);
+            // 4.所有的函数都是Function 的实例(对象),
+            // 5.函数也属于对象
+        }
+        {
+            // 二 函数的调用方式，一般情况下this指向我们的调用者
+            // 1.普通函数,this指向window
+                function fn1(){console.log('人生的巅峰');}
+                fn1(); 
+                fn1.call();
+            // 2.对象的方法，this指向的是对象o
+                let o = {
+                    sayHi : function(){
+                        console.log('人生 的低谷');
+                    }
+                }
+                o.sayHi();
+            // 3.构造函数，this指向的是ldh 这个实力对象 原型对象里面 的this指向的也是ldh这个实力对象
+                function Star(){};
+                let ldh= new Star();
+            // 4.绑定事件函数 this指向 btn调用者
+                btn.onclick = function(){}; //点击按钮就可以调用这个函数
+            // 5.定时器函数 this的指向的是window
+                setInterval(() => {}, 1000);// 这个函数是定时器自动1秒调用一次
+            // 6.立即执行函数 this指向也是window
+                (function(){
+                    console.log('你不懂我悲伤');
+                })()//立即执行函数是自动调用
+
+
+
+        }
+        
+
+
+    </script>
+</body>
+
+</html>
